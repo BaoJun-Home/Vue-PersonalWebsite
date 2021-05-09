@@ -1,14 +1,43 @@
 <template>
   <ul class="contact-container">
-    <li v-for="item in itemList" :key="item.id">
-      <a :href="item.linkUrl">
+    <li>
+      <a target="_blank" href="https://github.com/BaoJun-Home">
         <div class="icon">
-          <Icon :type="item.icon" />
+          <Icon type="github" />
         </div>
-        <span class="title">{{ item.title }}</span>
+        <span class="title">{{ datas.githubName }}</span>
       </a>
-      <div class="qr-code" v-if="item.qrCodeUrl">
-        <img :src="item.qrCodeUrl" alt="" />
+    </li>
+    <li>
+      <a :href="`mailto:${datas.mail}`">
+        <div class="icon">
+          <Icon type="email" />
+        </div>
+        <span class="title">{{ datas.mail }}</span>
+      </a>
+    </li>
+    <li>
+      <a
+        :href="`tencent://message/?Menu=yes&uin=${datas.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`"
+      >
+        <div class="icon">
+          <Icon type="qq" />
+        </div>
+        <span class="title">{{ datas.qq }}</span>
+      </a>
+      <div class="qr-code">
+        <img :src="datas.qqQrCode" alt="" />
+      </div>
+    </li>
+    <li>
+      <a>
+        <div class="icon">
+          <Icon type="weixin" />
+        </div>
+        <span class="title">{{ datas.weixin }}</span>
+      </a>
+      <div class="qr-code">
+        <img :src="datas.weixinQrCode" alt="" />
       </div>
     </li>
   </ul>
@@ -16,44 +45,11 @@
 
 <script>
 import Icon from "@/components/Icon";
+import { mapState } from "vuex";
 
 export default {
-  data() {
-    return {
-      itemList: [
-        {
-          id: 1001,
-          icon: "github",
-          title: "BaoJun-Home",
-          linkUrl: "https://github.com/BaoJun-Home?tab=repositories",
-          qrCodeUrl: undefined,
-        },
-        {
-          id: 1002,
-          icon: "email",
-          title: "331332140@qq.com",
-          linkUrl: "mailto:331332140@qq.com",
-          qrCodeUrl: undefined,
-        },
-        {
-          id: 1003,
-          icon: "qq",
-          title: "331332140",
-          linkUrl:
-            "tencent://message/?Menu=yes&uin=331332140&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45",
-          qrCodeUrl:
-            "http://www.duyiedu.com/source/img/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.png",
-        },
-        {
-          id: 1004,
-          icon: "github",
-          title: "BaoJun-Home",
-          linkUrl: "#",
-          qrCodeUrl:
-            "http://www.duyiedu.com/source/img/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.png",
-        },
-      ],
-    };
+  computed: {
+    ...mapState("setting", ["datas"]),
   },
   components: {
     Icon,

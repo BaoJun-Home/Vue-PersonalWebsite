@@ -2,7 +2,7 @@
   <div
     class="home-container"
     ref="container"
-    v-loading="isLoading"
+    v-loading="loading"
     @wheel="handleWheel"
   >
     <ul
@@ -36,13 +36,11 @@
 </template>
 
 <script>
-import { fetchBanners } from "@/api/banner";
 import BannerItem from "./BannerItem";
 import Icon from "@/components/Icon";
-import fetchData from "@/mixins/fetchData";
+import { mapState } from "vuex";
 
 export default {
-  mixins: [fetchData([])],
   name: "Home",
   components: {
     BannerItem,
@@ -55,11 +53,15 @@ export default {
       isWheel: false, // 是否正在滚动
     };
   },
+  created() {
+    this.$store.dispatch("banner/getBanners");
+  },
   computed: {
     // 横幅容器的的 marginTop 值
     marginTop() {
       return -this.index * this.containerHeight + "px";
     },
+    ...mapState("banner", ["datas", "loading"]),
   },
   methods: {
     // 切换横幅
@@ -87,10 +89,6 @@ export default {
     // 过渡效果结束触发
     handleTransitionEnd() {
       this.isWheel = false;
-    },
-    // 获取远程数据
-    async fetchData() {
-      return await fetchBanners();
     },
   },
   mounted() {

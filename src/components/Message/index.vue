@@ -7,7 +7,7 @@
     </h3>
     <MessageList :list="list" />
     <div class="loading" v-loading="isListLoading">
-      {{ list.length >= total ? "没有更多了" : "" }}
+      {{ list.length > total ? "没有更多了" : "" }}
     </div>
   </div>
 </template>

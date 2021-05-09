@@ -1,10 +1,10 @@
 <template>
   <div class="aside-container">
-    <Avatar url="http://mdrs.yuanjin.tech/FgMwAPYq17So9nwVH44ltDHo7u3c" />
-    <h1 class="title">kevin-site</h1>
+    <Avatar :url="datas.avatar" v-if="datas" />
+    <h1 class="title" v-if="datas">{{ datas.siteTitle }}</h1>
     <Menu />
-    <Contact />
-    <p class="footer">河北省 - 廊坊市</p>
+    <Contact v-if="datas" />
+    <p class="footer" v-if="datas">{{ datas.icp }}</p>
   </div>
 </template>
 
@@ -12,12 +12,16 @@
 import Avatar from "@/components/Avatar";
 import Contact from "./Contact";
 import Menu from "./Menu";
+import { mapState } from "vuex";
 
 export default {
   components: {
     Avatar,
     Contact,
     Menu,
+  },
+  computed: {
+    ...mapState("setting", ["datas"]),
   },
 };
 </script>
@@ -42,7 +46,7 @@ export default {
   .title {
     text-align: center;
     color: #fff;
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
   .footer {
     text-align: center;

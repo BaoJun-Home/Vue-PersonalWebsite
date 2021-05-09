@@ -20,6 +20,7 @@ import BlogDetail from "./components/BlogDetail";
 import BlogTOC from "./components/BlogTOC";
 import BlogComment from "./components/BlogComment";
 import mainScroll from "@/mixins/mainScroll";
+import { controlWebsiteTitle } from "@/utils";
 
 export default {
   mixins: [fetchData({}), mainScroll],
@@ -43,7 +44,12 @@ export default {
   },
   methods: {
     async fetchData() {
-      return await fetchBlog(this.blogId);
+      const result = await fetchBlog(this.blogId);
+      if (result?.title) {
+        controlWebsiteTitle.setRouteTitle(result.title);
+      }
+
+      return result;
     },
   },
 };

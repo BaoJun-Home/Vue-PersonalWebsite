@@ -15,9 +15,10 @@
 import Message from "@/components/Message";
 import fetchData from "@/mixins/fetchData";
 import { fetchComments, postComment } from "@/api/blog";
+import fetchMore from "@/mixins/fetchMore";
 
 export default {
-  mixins: [fetchData({ total: 0, rows: [] })],
+  mixins: [fetchData({ total: 0, rows: [] }), fetchMore],
   components: {
     Message,
   },
@@ -28,41 +29,13 @@ export default {
       gap: 100,
     };
   },
-  created() {
-    this.$eventBus.$on("mainScroll", this.handleScroll);
-  },
-  beforeDestroy() {
-    this.$eventBus.$off("mainScroll", this.handleScroll);
-  },
-  computed: {
-    hasMore() {
-      return this.datas.rows.length < this.datas.total;
-    },
-  },
   methods: {
-    handleScroll(dom) {
-      if (!dom) return;
-      if (!this.hasMore) return;
-      const dist = dom.scrollHeight - dom.scrollTop - dom.clientHeight;
-      if (dist <= this.gap && !this.isLoading) {
-        this.fetchMoreData();
-      }
-    },
     async fetchData() {
       return await fetchComments({
         blogId: this.$route.params.blogId,
         page: this.page,
         limit: this.limit,
       });
-    },
-    // 加载更多评论
-    async fetchMoreData() {
-      if (!this.hasMore) return;
-      this.isLoading = true;
-      this.page++;
-      const resp = await this.fetchData();
-      this.datas.rows = [...this.datas.rows, ...resp.rows];
-      this.isLoading = false;
     },
     async handleSubmit(comment, callback) {
       const resp = await postComment({

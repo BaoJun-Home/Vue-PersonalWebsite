@@ -301,7 +301,7 @@ Mock.mock(/^\/api\/comment\/?(\?.+)?$/, "get", (options) => {
     code: 0,
     msg: "",
     data: {
-      total: 51,
+      "total|100-300": 0,
       [`rows|${limit || 10}`]: [
         {
           id: "@guid",
