@@ -45,6 +45,10 @@ export default {
   methods: {
     async fetchData() {
       const result = await fetchBlog(this.blogId);
+      if (!result) {
+        this.$router.push("/404.html");
+        return;
+      }
       if (result?.title) {
         controlWebsiteTitle.setRouteTitle(result.title);
       }

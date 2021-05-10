@@ -3,7 +3,11 @@ import VueRouter from "vue-router";
 import routes from "./routes";
 import { controlWebsiteTitle } from "@/utils";
 
-Vue.use(VueRouter);
+if (!window.VueRouter) {
+  // 通过 CDN 引入的时候会污染一个全局变量 VueRouter
+  // 通过 CDN 引入不能书写下面的代码
+  Vue.use(VueRouter);
+}
 
 const router = new VueRouter({
   routes,

@@ -1,5 +1,9 @@
 // 利用 Vue 实现事件总线
 import Vue from "vue";
+
+// mainScroll事件：主区域滚动事件
+// setMainScroll事件：设置主区域滚动条
+
 export default new Vue({});
 
 // 手写事件总线

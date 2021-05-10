@@ -20,7 +20,7 @@ Mock.mock(/^\/api\/blog(\?.+)?$/, "get", (options) => {
           },
           "scanNumber|1000-3000": 0,
           "commentNumber|100-300": 0,
-          "thumb|1": ["@image(200x150, @color, @color, png, @natural)"],
+          "thumb|1": ["@image(200x150, @color, @color, png, @natural)", null],
           createDate: "@date(T)",
         },
       ],
